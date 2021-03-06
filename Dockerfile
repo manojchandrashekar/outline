@@ -12,10 +12,7 @@ RUN yarn --pure-lockfile
 
 COPY . .
 
-RUN yarn build && \
-  yarn --production --ignore-scripts --prefer-offline && \
-  rm -rf shared && \
-  rm -rf app
+RUN yarn build
 
 CMD yarn start
 
