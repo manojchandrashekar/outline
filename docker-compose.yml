@@ -13,19 +13,22 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: outline
   s3:
-    image: lphoward/fake-s3
+    image: fake-s3:v001
+    build:
+      context: .
+      dockerfile: Dockerfile.fake-s3
     ports:
       - "4569:4569"
     volumes:
       - ./fakes3:/fakes3_root
   outline:
     image: outline:v001
-    command: yarn dev
+    #command: yarn dev
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        pull: 1
+      #args:
+      #pull: 1
     ports:
       - "3000:3000"
     volumes:

@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM arm64v8/node:14-alpine
 
 ENV APP_PATH /opt/outline
 RUN mkdir -p $APP_PATH
@@ -17,7 +17,6 @@ RUN yarn build && \
   rm -rf shared && \
   rm -rf app
 
-ENV NODE_ENV production
 CMD yarn start
 
 EXPOSE 3000
