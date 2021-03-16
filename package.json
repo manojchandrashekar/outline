@@ -9,7 +9,7 @@
     "build:server": "babel -d ./build/server ./server && babel -d ./build/shared ./shared && cp package.json ./build && ln -sf \"$(pwd)/webpack.config.dev.js\" ./build",
     "build:webpack": "webpack --config webpack.config.prod.js",
     "build": "yarn clean && yarn build:webpack && yarn build:i18n && yarn build:server",
-    "start": "yarn sequelize:migrate --env production-ssl-disabled && cross-env NODE_ENV=production pm2-runtime ./build/server/index.js",
+    "start": "yarn sequelize:migrate --env production-ssl-disabled && node ./build/server/index.js",
     "dev": "nodemon --exec \"yarn build:server && yarn build:i18n && node build/server/index.js\" -e js --ignore build/ --ignore app/",
     "lint": "eslint app server shared",
     "deploy": "git push heroku master",

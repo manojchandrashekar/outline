@@ -9,15 +9,19 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: outline
-    restart: always
-  s3:
-    image: fake-s3:v001
-    build:
-      context: .
-      dockerfile: Dockerfile.fake-s3
-    restart: always
     volumes:
-      - ./fakes3:/fakes3_root
+      - ./data/pgdata:/var/lib/postgresql/data
+    restart: always
+  minio:
+    image: minio/minio
+    volumes:
+      - ./data/minio_root:/minio_root:z
+      - ./data/certs:/root/.minio/certs:z
+    command: "minio server /minio_root"
+    env_file: ./.env.minio
+    ports: 
+      - "9000:9000"
+    restart: always
   outline:
     image: outline:v001
     build:
@@ -27,8 +31,8 @@ services:
       - "3000:3000"
     volumes:
       - .:/opt/outline
-    restart: always
+        restart: always
     depends_on:
       - postgres
       - redis
-      - s3
+      - minio

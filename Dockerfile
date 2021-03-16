@@ -8,12 +8,12 @@ WORKDIR $APP_PATH
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN yarn --pure-lockfile
+RUN NODE_ENV=dev yarn --pure-lockfile
 
 COPY . .
 
 RUN yarn build
 
-CMD yarn start
+CMD NODE_ENV=production yarn start
 
 EXPOSE 3000
